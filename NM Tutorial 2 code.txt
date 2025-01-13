@@ -1,0 +1,24 @@
+# We must solve Ax + b =0 to minimise the energy
+using LinearAlgebra
+function find_min(A,b,c)
+   # Check if the matrix is symmetric
+    if A =! transpose(A)
+        println("Matrix is not symmetric.")
+        return
+    end
+
+    # Check if the matrix is positive definite
+    eigenvalues = eigen(A).values
+    if any(eigenvalues <= 0)
+        println("Matrix is not positive definite.")
+        return
+    end
+    x = - A\b
+    println(A*x + b) # to check if it has solved the equation 
+    energy_min = 0.5*dot(x,A*x)+ dot(x,b)+c
+    println(energy_min)
+end
+A = randn(2,2)
+b = randn(2,1)
+c = randn(2,1) 
+find_min(A,b,c)  
